@@ -24,6 +24,8 @@ public class WriteReadToFile {
 
     /**
      * копирует фаил.
+     *
+     * @return
      */
     public static void writeToFile(MultipartFile file, String filePath) {
         OutputStream outputStream;
@@ -35,6 +37,7 @@ public class WriteReadToFile {
             ioException.printStackTrace();
 
         }
+
     }
 
 //    public static String readToFile(String filePath) {

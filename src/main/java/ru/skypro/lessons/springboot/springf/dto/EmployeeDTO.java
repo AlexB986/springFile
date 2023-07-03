@@ -44,19 +44,20 @@ public class EmployeeDTO {
         this.name = name;
     }
 
-    public int getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
     }
 
-    private void setPosition(Position position) {
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
         this.position = position;
     }
 
-    private Position getPosition() {
-        return position;
-    }
 }

@@ -2,6 +2,7 @@ package ru.skypro.lessons.springboot.springf.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import ru.skypro.lessons.springboot.springf.pojo.Position;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,7 +10,7 @@ public class EmployeeFullInfo {
     private Integer id;
     private String name;
     private Integer salary;
-    private Integer positionRole;
+    private Integer position;
 
 
     public Integer getId() {
@@ -36,13 +37,15 @@ public class EmployeeFullInfo {
         this.salary = salary;
     }
 
-    public Integer getPositionRole() {
-        return positionRole;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setPositionRole(Integer positionRole) {
-        this.positionRole = positionRole;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
+
+
 
     @Override
     public String toString() {
@@ -50,7 +53,7 @@ public class EmployeeFullInfo {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", positionRole=" + positionRole +
+                ", positionRole=" + position +
                 '}';
     }
 }

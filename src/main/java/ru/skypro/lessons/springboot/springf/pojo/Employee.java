@@ -2,7 +2,11 @@ package ru.skypro.lessons.springboot.springf.pojo;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -17,24 +21,7 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    public Employee() {
-    }
 
-    public Employee(Integer id, String name, Integer salary, Position position){
-        this.id=id;
-        this.name = name;
-        this.salary = salary;
-        this.position = position;
-    }
-    public Employee(Integer id, String name, Integer salary){
-        this.id=id;
-        this.name = name;
-        this.salary = salary;
-    }
-    public Employee( String name, Integer salary){
-        this.name = name;
-        this.salary = salary;
-    }
     public Integer getId(){return id;}
     public String getName(){return name;}
     public Integer getSalary(){return salary;}

@@ -2,6 +2,14 @@ package ru.skypro.lessons.springboot.springf.pojo;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+
+//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "position")
@@ -11,10 +19,8 @@ public class Position {
     private Integer position_id;
     @Column(name = "role")
     private String role;
+//public Position(){};
 
-
-    public Position() {
-    }
 
     public Integer getPosition_id() {
         return position_id;

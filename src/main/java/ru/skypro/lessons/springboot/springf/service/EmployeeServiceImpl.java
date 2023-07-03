@@ -1,20 +1,24 @@
 package ru.skypro.lessons.springboot.springf.service;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.springf.pojo.Employee;
+import ru.skypro.lessons.springboot.springf.pojo.Position;
 import ru.skypro.lessons.springboot.springf.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.springf.repository.PagingEmployeeRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.writeToFile;
 
@@ -85,12 +89,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void postJsonFileEmployeeRead(MultipartFile file) {
         ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         String filePath = "test.json";
         writeToFile(file, filePath);
         try {
-            EmployeeFullInfo employeeFullInfo = objectMapper.readValue(new File(filePath), EmployeeFullInfo.class);
-            System.out.println(employeeFullInfo);
+//          EmployeeFullInfo employeeFullInfo = objectMapper.readValue(new File(filePath), EmployeeFullInfo.class); // массив более 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo` from Array value (token `JsonToken.START_ARRAY`) at [Source: (File); line: 2, column: 1])
+
+
+         List<EmployeeFullInfo>list = objectMapper.readValue(new File(filePath), new TypeReference<List<EmployeeFullInfo>>() {}); //массив 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.util.ArrayList<ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo>` from Object value (token `JsonToken.START_OBJECT`) at [Source: (File); line: 1, column: 1])
+
+            System.out.println(list);
+            JsonNode jsonNode = objectMapper.readTree(new File(filePath));
+            int sizeEmployee = jsonNode.size();
+            Employee employee = new Employee(jsonNode.get(1).get("id"),jsonNode.get(1).get("name"),jsonNode.get(1).get("salary"),new Position(jsonNode.get(1).get("position"));
+//            System.out.println(jsonNode);
+
+
+
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
