@@ -93,8 +93,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         writeToFile(file, filePath);
         try {
 //          EmployeeFullInfo employeeFullInfo = objectMapper.readValue(new File(filePath), EmployeeFullInfo.class); // массив более 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo` from Array value (token `JsonToken.START_ARRAY`) at [Source: (File); line: 2, column: 1])
-
-
          List<EmployeeFullInfo>list = objectMapper.readValue(new File(filePath), new TypeReference<List<EmployeeFullInfo>>() {}); //массив 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.util.ArrayList<ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo>` from Object value (token `JsonToken.START_OBJECT`) at [Source: (File); line: 1, column: 1])
 
             System.out.println(list);
@@ -102,6 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             int sizeEmployee = jsonNode.size();
             Employee employee = new Employee(jsonNode.get(1).get("id"),jsonNode.get(1).get("name"),jsonNode.get(1).get("salary"),new Position(jsonNode.get(1).get("position"));
 //            System.out.println(jsonNode);
+
 
 
 

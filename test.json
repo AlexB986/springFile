@@ -1,0 +1,21 @@
+
+[
+  {
+    "id": 10,
+    "name": "rita",
+    "salary": 123456,
+    "position": 3
+  },
+  {
+    "id": 11,
+    "name": "gena",
+    "salary": 123400,
+    "position": 2
+  },
+  {
+    "id": 12,
+    "name": "tom",
+    "salary": 13456,
+    "position": 3
+  }
+]
