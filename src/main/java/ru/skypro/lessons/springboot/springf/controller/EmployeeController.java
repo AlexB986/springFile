@@ -82,14 +82,18 @@ public class EmployeeController {
     public void postJsonFileEmployeeRead(@RequestParam("file") MultipartFile file) {
         try {
             employeeService.postJsonFileEmployeeRead(file);
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+
     /**
      * POST формировать JSON-файл со статистикой по отделам:
      */
-//    @PostMapping("/report")
+//    @PostMapping
+//    public int report() {
+//        return employeeService.generateReport();
+//    }
 
     /**
      *GET

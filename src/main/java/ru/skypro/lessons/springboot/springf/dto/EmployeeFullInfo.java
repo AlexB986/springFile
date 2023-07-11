@@ -1,17 +1,17 @@
 package ru.skypro.lessons.springboot.springf.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import ru.skypro.lessons.springboot.springf.pojo.Position;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class EmployeeFullInfo {
     private Integer id;
     private String name;
     private Integer salary;
-    private Integer position;
+    private String positionRole;
 
+    public EmployeeFullInfo(Integer id,String name, Integer salary, String positionRole) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.positionRole = positionRole;
+    }
 
     public Integer getId() {
         return id;
@@ -37,24 +37,11 @@ public class EmployeeFullInfo {
         this.salary = salary;
     }
 
-    public Integer getPosition() {
-        return position;
+    public String getPositionRole() {
+        return positionRole;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
-
-
-
-    @Override
-    public String toString() {
-        return "EmployeeFullInfo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                ", positionRole=" + position +
-                '}';
+    public void setPositionRole(String positionRole) {
+        this.positionRole = positionRole;
     }
 }

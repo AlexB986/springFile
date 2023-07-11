@@ -4,36 +4,57 @@ package ru.skypro.lessons.springboot.springf.dto;
 import ru.skypro.lessons.springboot.springf.pojo.Report;
 
 public class ReportDTO {
-    private Integer id;
-    private String data;
+    private String position;
+    private long count;
+    private int maxSalary;
+    private int minSalary;
+    private double averageSalary;
 
-    public static ReportDTO fromReport(Report report) {
-        ReportDTO reportDTO = new ReportDTO();
-        reportDTO.setId(report.getId());
-        reportDTO.setData(report.getData());
-        return reportDTO;
+    public ReportDTO(String position,long count,int maxSalary,int minSalary,double averageSalary){
+        this. position = position;
+        this.count = count;
+        this.maxSalary = maxSalary;
+        this.minSalary = minSalary;
+        this.averageSalary = averageSalary;
     }
 
-    public Report toReport() {
-        Report report = new Report();
-        report.setId(this.getId());
-        report.setData(this.getData());
-        return report;
+    public String getPosition() {
+        return position;
     }
 
-    public Integer getId() {
-        return id;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public long getCount() {
+        return count;
     }
 
-    public String getData() {
-        return data;
+    public void setCount(long count) {
+        this.count = count;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public int getMaxSalary() {
+        return maxSalary;
+    }
+
+    public void setMaxSalary(int maxSalary) {
+        this.maxSalary = maxSalary;
+    }
+
+    public int getMinSalary() {
+        return minSalary;
+    }
+
+    public void setMinSalary(int minSalary) {
+        this.minSalary = minSalary;
+    }
+
+    public double getAverageSalary() {
+        return averageSalary;
+    }
+
+    public void setAverageSalary(double averageSalary) {
+        this.averageSalary = averageSalary;
     }
 }

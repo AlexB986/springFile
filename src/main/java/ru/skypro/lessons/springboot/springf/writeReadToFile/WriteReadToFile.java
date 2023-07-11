@@ -24,11 +24,10 @@ public class WriteReadToFile {
 
     /**
      * копирует фаил.
-     *
-     * @return
      */
-    public static void writeToFile(MultipartFile file, String filePath) {
+    public static void writeToFile(MultipartFile file) {
         OutputStream outputStream;
+        String filePath = "test.json";
         try {
             outputStream = new FileOutputStream(filePath);
             outputStream.write(file.getBytes());

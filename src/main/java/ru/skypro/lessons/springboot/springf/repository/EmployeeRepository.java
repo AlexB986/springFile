@@ -33,7 +33,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
      * GET возвращать информацию о сотруднике с переданным position
      */
 
-    @Query("SELECT new ru.skypro.lessons.springboot.springf.dto." +
+    @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
             "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
             "FROM Employee e JOIN FETCH Position p " +
             "WHERE e.position= p AND p.role = :role")
@@ -46,6 +46,10 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
             "FROM Employee e  JOIN FETCH Position p " +
             "WHERE e.position = p AND e.id = :id")
     List<EmployeeFullInfo>buIdEmployeeINfo(int id);
+
+/**
+ *  POST   сохранены в базе данных
+ */
 
 }
 

@@ -2,12 +2,17 @@ package ru.skypro.lessons.springboot.springf.service;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo;
@@ -18,20 +23,21 @@ import ru.skypro.lessons.springboot.springf.repository.PagingEmployeeRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.writeToFile;
 
+//@NoArgsConstructor
+@AllArgsConstructor
+//@RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private final PagingEmployeeRepository pagingEmployeeRepository;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PagingEmployeeRepository pagingEmployeeRepository) {
-        this.employeeRepository = employeeRepository;
-        this.pagingEmployeeRepository = pagingEmployeeRepository;
-    }
+    private final EmployeeMaper employeeMaper;
 
 
     /**
@@ -89,25 +95,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void postJsonFileEmployeeRead(MultipartFile file) {
         ObjectMapper objectMapper = new ObjectMapper();
+        writeToFile(file);
         String filePath = "test.json";
-        writeToFile(file, filePath);
+
         try {
-//          EmployeeFullInfo employeeFullInfo = objectMapper.readValue(new File(filePath), EmployeeFullInfo.class); // массив более 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo` from Array value (token `JsonToken.START_ARRAY`) at [Source: (File); line: 2, column: 1])
-         List<EmployeeFullInfo>list = objectMapper.readValue(new File(filePath), new TypeReference<List<EmployeeFullInfo>>() {}); //массив 1го Ошибка(com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.util.ArrayList<ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo>` from Object value (token `JsonToken.START_OBJECT`) at [Source: (File); line: 1, column: 1])
-
-            System.out.println(list);
-            JsonNode jsonNode = objectMapper.readTree(new File(filePath));
-            int sizeEmployee = jsonNode.size();
-            Employee employee = new Employee(jsonNode.get(1).get("id"),jsonNode.get(1).get("name"),jsonNode.get(1).get("salary"),new Position(jsonNode.get(1).get("position"));
-//            System.out.println(jsonNode);
-
-
-
-
-
+            objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
+            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {
+            });
+            System.out.println(listEmployeeDto);
+            listEmployeeDto.stream()
+                    .map(employeeMaper::toEntity)
+                    .forEach(employeeRepository::save);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public int generateReport() {
+        return 0;
     }
 }
 

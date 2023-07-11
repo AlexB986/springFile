@@ -6,8 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
 
-@Data
+import java.time.Instant;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -16,11 +19,27 @@ import lombok.experimental.Accessors;
 public class Report {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer reportId;
     @Lob
     @Column(name = "data", columnDefinition = "text")
     private String data;
 
 
+
+    public Integer getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(Integer reportId) {
+        this.reportId = reportId;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 }
 

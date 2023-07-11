@@ -1,0 +1,3 @@
+POST localhost:8080/employees/upload
+POST localhost:8080/report
+GET localhost:8080/report/{id}
