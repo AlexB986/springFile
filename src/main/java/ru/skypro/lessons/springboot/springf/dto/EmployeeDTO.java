@@ -1,57 +1,24 @@
 package ru.skypro.lessons.springboot.springf.dto;
 
+import lombok.Data;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import ru.skypro.lessons.springboot.springf.pojo.Employee;
-import ru.skypro.lessons.springboot.springf.pojo.Position;
-
+@Data
 public class EmployeeDTO {
-    //     private int employeeId;
     private String name;
     private int salary;
-    private PositionDTO position;
+    private  Integer position_id_employee_id;
 
-    public EmployeeDTO(String name, int salary, PositionDTO position) {
-//         this.employeeId=employeeId;
+    public EmployeeDTO(String name, int salary, Integer position_id_employee_id) {
         this.name = name;
         this.salary = salary;
-        this.position = position;
+//        this.position = position;
+        this.position_id_employee_id = position_id_employee_id;
     }
 
     public EmployeeDTO() {
     }
 
-//     public int getEmployeeId() {
-//         return employeeId;
-//     }
-//
-//     public void setEmployeeId(int employeeId) {
-//         this.employeeId = employeeId;
-//     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public PositionDTO getPosition() {
-        return position;
-    }
-
-    public void setPosition(PositionDTO position) {
-        this.position = position;
-    }
 
     @Override
     public String toString() {
@@ -59,7 +26,7 @@ public class EmployeeDTO {
 //                 "employeeId=" + employeeId +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", position=" + position +
+//                ", position=" + position +
                 '}';
     }
 }

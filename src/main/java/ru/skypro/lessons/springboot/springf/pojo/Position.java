@@ -1,29 +1,36 @@
 package ru.skypro.lessons.springboot.springf.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 //@NoArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 
 @Entity
 @Table(name = "position")
 public class Position {
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer positionId;
 
-    @Column(name = "role")
     private String role;
+    @OneToMany(mappedBy = "position")
+    private List<Employee> employeeList= new ArrayList<Employee>();
 
+    public Position() {
+    }
 
+    public Position(String role) {
+        this.role = role;
+    }
 
     public Integer getPositionId() {
         return positionId;
@@ -39,6 +46,14 @@ public class Position {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     @Override

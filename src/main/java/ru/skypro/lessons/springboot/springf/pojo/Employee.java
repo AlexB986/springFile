@@ -1,27 +1,30 @@
 package ru.skypro.lessons.springboot.springf.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
 @Entity
 @Table(name = "employee")
-
+@Data
 public class Employee {
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer employeeId;
-    @Column(name = "name")
+    @JsonIgnore
+    private int position_id_employee_id;
     private String name;
-    @Column(name = "salary")
     private Integer salary;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "position_id")
+    @JoinColumn(name = "position_id_employee_id",insertable = false, updatable = false)
     private Position position;
 
 
@@ -55,6 +58,14 @@ public class Employee {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public int getPosition_id_employee_id() {
+        return position_id_employee_id;
+    }
+
+    public void setPosition_id_employee_id(int position_id_employee_id) {
+        this.position_id_employee_id = position_id_employee_id;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package ru.skypro.lessons.springboot.springf.service;
 
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -93,15 +96,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public void postJsonFileEmployeeRead(MultipartFile file) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public void postJsonFileEmployeeRead(MultipartFile file)  {
         writeToFile(file);
         String filePath = "test.json";
+        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
-            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {
-            });
+
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {});
             System.out.println(listEmployeeDto);
             listEmployeeDto.stream()
                     .map(employeeMaper::toEntity)

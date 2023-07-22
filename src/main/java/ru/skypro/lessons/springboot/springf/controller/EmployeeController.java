@@ -14,7 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeeController {
+public class
+EmployeeController {
     private static EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
