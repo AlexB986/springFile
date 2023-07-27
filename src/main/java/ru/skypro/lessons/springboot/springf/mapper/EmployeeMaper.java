@@ -1,4 +1,4 @@
-package ru.skypro.lessons.springboot.springf.service;
+package ru.skypro.lessons.springboot.springf.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
@@ -15,29 +15,19 @@ public class EmployeeMaper {
         employee.setName(employeeDTO.getName());
         employee.setSalary(employeeDTO.getSalary());
         employee.setPosition_id_employee_id(employeeDTO.getPosition_id_employee_id());
-//        employee.setPosition(new Position().getPositionId());
-//        PositionDTO positionDTO = employeeDTO.getPosition();
-//        Position position = new Position();
-//        position.setPositionId(positionDTO.getPositionId());
-//        position.setPositionId(positionDTO.getPositionId());
-//        employee.setPosition(position);
 
 
         return employee;
     }
-    
+
 
     public EmployeeDTO toDTO(Employee employee) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
-//        employeeDTO.setEmployeeId(employee.getEmployeeId());
         employeeDTO.setName(employee.getName());
         employeeDTO.setSalary(employee.getSalary());
+        employeeDTO.setPosition_id_employee_id(employee.getPosition_id_employee_id());
 
-        Position position = employee.getPosition();
-//        PositionDTO positionDTO = new PositionDTO(position.getPositionId(), position.getRole());
-//        PositionDTO positionDTO = new PositionDTO(position.getRole());
 
-//        employeeDTO.setPosition(positionDTO);
         return employeeDTO;
     }
 

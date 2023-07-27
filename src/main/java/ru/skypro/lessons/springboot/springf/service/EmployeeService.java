@@ -39,9 +39,10 @@ public interface EmployeeService {
 
     /**
      * POST  принимать на вход файл JSON
-     *
-     * @return
      */
     void postJsonFileEmployeeRead(MultipartFile file) throws IOException;
-
+    /**
+     * POST формировать JSON-файл со статистикой по отделам:
+     */
+    int generateReport() ;
 }

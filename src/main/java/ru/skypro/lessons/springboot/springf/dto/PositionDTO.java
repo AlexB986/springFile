@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PositionDTO {
     private Integer positionId;
-//    private String role;
+    private String role;
 
 
     public Integer getPositionId() {
@@ -22,19 +22,20 @@ public class PositionDTO {
         this.positionId = positionId;
     }
 
-//    public String getRole() {
-//        return role;
-//    }
-//
-//    public void setRole(String role) {
-//        this.role = role;
-//    }
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 
     @Override
     public String toString() {
         return "PositionDTO{" +
                 "positionId=" + positionId +
-//                ", role='" + role + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

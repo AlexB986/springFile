@@ -17,12 +17,16 @@ import java.time.Instant;
 @Entity
 @Table(name = "report")
 public class Report {
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
     @Lob
     @Column(name = "data", columnDefinition = "text")
     private String data;
+
+    @CreationTimestamp(source = SourceType.DB)
+    @Column(updatable = false,nullable = false)
+    private Instant createOn;
 
 
 
@@ -40,6 +44,13 @@ public class Report {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Instant getCreateOn() {
+        return createOn;
+    }
+    public void setCreateOn(Instant createOn) {
+        this.createOn = createOn;
     }
 }
 

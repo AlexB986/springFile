@@ -1,32 +1,28 @@
 package ru.skypro.lessons.springboot.springf.service;
 
 
-import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo;
+import ru.skypro.lessons.springboot.springf.dto.ReportDTO;
+import ru.skypro.lessons.springboot.springf.mapper.EmployeeMaper;
 import ru.skypro.lessons.springboot.springf.pojo.Employee;
-import ru.skypro.lessons.springboot.springf.pojo.Position;
+import ru.skypro.lessons.springboot.springf.pojo.Report;
 import ru.skypro.lessons.springboot.springf.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.springf.repository.PagingEmployeeRepository;
+import ru.skypro.lessons.springboot.springf.repository.ReportRepository;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -38,9 +34,11 @@ import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFi
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
     private final PagingEmployeeRepository pagingEmployeeRepository;
     private final EmployeeMaper employeeMaper;
+    private final ObjectMapper objectMapper;
+    private final ReportRepository reportRepository;
 
 
     /**
@@ -96,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public void postJsonFileEmployeeRead(MultipartFile file)  {
+    public void postJsonFileEmployeeRead(MultipartFile file) {
         writeToFile(file);
         String filePath = "test.json";
         ObjectMapper objectMapper = new ObjectMapper();
@@ -104,7 +102,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
 
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {});
+            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {
+            });
             System.out.println(listEmployeeDto);
             listEmployeeDto.stream()
                     .map(employeeMaper::toEntity)
@@ -114,8 +113,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    /**
+     * POST формировать  статистикой по отделам:
+     */
     public int generateReport() {
-        return 0;
+        List<ReportDTO> report = reportRepository.buildReport();
+        String fileName = "analistic";
+        try {
+            String statistic = objectMapper.writeValueAsString(report);
+
+            Report reportEntity = new Report();
+            reportEntity.setData(statistic);
+            return reportRepository.save(reportEntity).getReportId();
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Error",e);
+        }
+
     }
 }
 

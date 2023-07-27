@@ -14,8 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("employees")
-public class
-EmployeeController {
+public class EmployeeController {
     private static EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
@@ -91,14 +90,14 @@ EmployeeController {
     /**
      * POST формировать JSON-файл со статистикой по отделам:
      */
-//    @PostMapping
-//    public int report() {
+//    @PostMapping(value = "/report")
+//    public int report() throws IOException {
 //        return employeeService.generateReport();
 //    }
 
-    /**
-     *GET
-     *  находить и возвращать созданный ранее файл в формате JSON по идентификатору.
-     */
+//    /**
+//     *GET
+//     *  находить и возвращать созданный ранее файл в формате JSON по идентификатору.
+//     */
 //    @GetMapping("/report/{id}")
 }

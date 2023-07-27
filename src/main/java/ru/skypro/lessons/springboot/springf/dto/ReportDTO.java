@@ -57,4 +57,15 @@ public class ReportDTO {
     public void setAverageSalary(double averageSalary) {
         this.averageSalary = averageSalary;
     }
+
+    @Override
+    public String toString() {
+        return "ReportDTO{" +
+                "position='" + position + '\'' +
+                ", count=" + count +
+                ", maxSalary=" + maxSalary +
+                ", minSalary=" + minSalary +
+                ", averageSalary=" + averageSalary +
+                '}';
+    }
 }

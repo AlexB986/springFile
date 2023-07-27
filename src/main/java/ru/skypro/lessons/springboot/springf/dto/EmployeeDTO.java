@@ -19,14 +19,12 @@ public class EmployeeDTO {
     }
 
 
-
     @Override
     public String toString() {
         return "EmployeeDTO{" +
-//                 "employeeId=" + employeeId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", salary=" + salary +
-//                ", position=" + position +
+                ", position_id_employee_id=" + position_id_employee_id +
                 '}';
     }
 }
