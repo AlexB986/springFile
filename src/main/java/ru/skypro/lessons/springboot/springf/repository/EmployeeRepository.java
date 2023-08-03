@@ -49,24 +49,4 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
             "WHERE e.position = p AND e.id = :id")
     List<EmployeeFullInfo> buIdEmployeeINfo(int id);
 
-//    /**
-//     * POST формировать  статистикой по отделам:
-//     */
-//    @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
-//            "ReportDTO(e.position,count (e.id),max(e.salary),min(e.salary),avg (e.salary))FROM Employee  e GROUP BY e .position")
-//    List<ReportDTO> buildReport();
 }
-//        Название отдела
-//        Кол-во сотрудников
-//        Максимальная зарплата
-//        Минимальная зарплата
-//        Средняя зарплата
-
-//
-//        POST-запрос localhost:8080/report. Он должен формировать отчет по отделам. Отчет содержит в себе:
-//        Название отдела
-//        Кол-во сотрудников
-//        Максимальная зарплата
-//        Минимальная зарплата
-//        Средняя зарплата
-//        и сохранять этот отчет в виде массива байтов в базу данных. Метод возвращает целочисленный идентификатор отчета, сохраненного в базе данных .

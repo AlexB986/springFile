@@ -1,12 +1,15 @@
 package ru.skypro.lessons.springboot.springf.service;
 
 
+import jakarta.annotation.Resource;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.springf.pojo.Employee;
+import ru.skypro.lessons.springboot.springf.pojo.Report;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeService {
 
@@ -42,7 +45,14 @@ public interface EmployeeService {
      */
     void postJsonFileEmployeeRead(MultipartFile file) throws IOException;
     /**
-     * POST формировать JSON-файл со статистикой по отделам:
+     * POST формировать  статистикой по отделам:
      */
     int generateReport() ;
+
+    /**
+     *GET
+     *  находить и возвращать созданный ранее файл в формате JSON по идентификатору.
+     */
+    Optional<Report>  generateReportId(Integer id);
+
 }

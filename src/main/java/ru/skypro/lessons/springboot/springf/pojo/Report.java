@@ -52,5 +52,14 @@ public class Report {
     public void setCreateOn(Instant createOn) {
         this.createOn = createOn;
     }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "reportId=" + reportId +
+                ", data='" + data + '\'' +
+                ", createOn=" + createOn +
+                '}';
+    }
 }
 

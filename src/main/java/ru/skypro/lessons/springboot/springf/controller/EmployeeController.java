@@ -87,17 +87,5 @@ public class EmployeeController {
         }
     }
 
-    /**
-     * POST формировать JSON-файл со статистикой по отделам:
-     */
-//    @PostMapping(value = "/report")
-//    public int report() throws IOException {
-//        return employeeService.generateReport();
-//    }
 
-//    /**
-//     *GET
-//     *  находить и возвращать созданный ранее файл в формате JSON по идентификатору.
-//     */
-//    @GetMapping("/report/{id}")
 }

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +23,13 @@ import ru.skypro.lessons.springboot.springf.pojo.Report;
 import ru.skypro.lessons.springboot.springf.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.springf.repository.PagingEmployeeRepository;
 import ru.skypro.lessons.springboot.springf.repository.ReportRepository;
+import ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile;
 
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.dowloadFile;
 import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.writeToFile;
 
 //@NoArgsConstructor
@@ -118,7 +122,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     public int generateReport() {
         List<ReportDTO> report = reportRepository.buildReport();
-        String fileName = "analistic";
         try {
             String statistic = objectMapper.writeValueAsString(report);
 
@@ -126,8 +129,21 @@ public class EmployeeServiceImpl implements EmployeeService {
             reportEntity.setData(statistic);
             return reportRepository.save(reportEntity).getReportId();
         } catch (JsonProcessingException e) {
-            throw new IllegalStateException("Error",e);
+            throw new IllegalStateException("Error", e);
         }
+
+    }
+
+    /**
+     * GET
+     * находить и возвращать созданный ранее файл в формате JSON по идентификатору.
+     */
+    @Override
+//    public Resource generateReportId(Integer id) {
+    public  Optional<Report> generateReportId(Integer id) {
+        Optional<Report> reportsfindById = reportRepository.findById(id);
+        return reportsfindById;
+
 
     }
 }
