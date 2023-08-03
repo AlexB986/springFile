@@ -139,7 +139,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * находить и возвращать созданный ранее файл в формате JSON по идентификатору.
      */
     @Override
-//    public Resource generateReportId(Integer id) {
     public  Optional<Report> generateReportId(Integer id) {
         Optional<Report> reportsfindById = reportRepository.findById(id);
         return reportsfindById;
