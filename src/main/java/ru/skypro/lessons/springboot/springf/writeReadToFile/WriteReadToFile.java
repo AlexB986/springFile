@@ -36,12 +36,28 @@ public class WriteReadToFile {
 
     }
 
-    public static Resource dowloadFile(Optional<Report> reportsfindById) {
-        String fileName = "responseTest.Json";
-        Resource resource = (Resource) new ByteArrayResource(reportsfindById.get().getData().getBytes());
-        return resource;
-    }
+//    public static Resource dowloadFile(Optional<Report> reportsfindById) {
+//        String fileName = "responseTest.Json";
+//        Resource resource = (Resource) new ByteArrayResource(reportsfindById.get().getData().getBytes());
+//        return resource;
+//    }
 
+////////////////////////////////var2/////////////////////////////////
+    /**
+     * сохраняем фаил с статистикой.
+     */
+    public static  void saveStatisticJsonFile(String statistic,String path){
+        OutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(path);
+            outputStream.write(statistic.getBytes());
+            outputStream.flush();
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+
+        }
+    }
 
 }
 

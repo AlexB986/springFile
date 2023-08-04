@@ -20,14 +20,16 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
-    @Lob
-    @Column(name = "data", columnDefinition = "text")
-    private String data;
+
+    @Column(name = "filePath", columnDefinition = "text")
+    private String filePath;
+//    @Lob
+//    @Column(name = "data", columnDefinition = "text")
+//    private String data;
 
     @CreationTimestamp(source = SourceType.DB)
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false, nullable = false)
     private Instant createOn;
-
 
 
     public Integer getReportId() {
@@ -38,28 +40,46 @@ public class Report {
         this.reportId = reportId;
     }
 
-    public String getData() {
-        return data;
+//    public String getData() {
+//        return data;
+//    }
+//
+//    public void setData(String data) {
+//        this.data = data;
+//    }
+
+
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public Instant getCreateOn() {
         return createOn;
     }
+
     public void setCreateOn(Instant createOn) {
         this.createOn = createOn;
     }
+
 
     @Override
     public String toString() {
         return "Report{" +
                 "reportId=" + reportId +
-                ", data='" + data + '\'' +
+                ", filePath='" + filePath + '\'' +
                 ", createOn=" + createOn +
                 '}';
     }
+//        public String toString() {
+//        return "Report{" +
+//                "reportId=" + reportId +
+//                ", data='" + data + '\'' +
+//                ", createOn=" + createOn +
+//                '}';
+//    }
 }
 
