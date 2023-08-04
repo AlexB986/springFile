@@ -26,8 +26,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
 
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
             "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
-            "FROM Employee e join fetch Position p " +
-            "WHERE e.position = p")
+            "FROM Employee e join fetch Position p " )
     List<EmployeeFullInfo> getFullEmployee();
 
     /**
@@ -37,7 +36,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
             "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
             "FROM Employee e JOIN FETCH Position p " +
-            "WHERE e.position= p AND p.role = :role")
+            "WHERE p.role = :role")
     List<EmployeeFullInfo> buPositionToEmployee(String role);
 
     /**
@@ -45,8 +44,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
      */
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto." +
             "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
-            "FROM Employee e  JOIN FETCH Position p " +
-            "WHERE e.position = p AND e.id = :id")
+            "FROM Employee e  JOIN FETCH e.position p " +
+            "WHERE e.id = :id")
     List<EmployeeFullInfo> buIdEmployeeINfo(int id);
 
 }

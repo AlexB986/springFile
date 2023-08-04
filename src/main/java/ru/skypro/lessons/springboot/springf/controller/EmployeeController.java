@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("employees")
+@RequestMapping("/employees")
 public class EmployeeController {
-    private static EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -24,7 +24,7 @@ public class EmployeeController {
     /**
      * GET  возвращать самой высокой зарплатой
      */
-    @GetMapping("withHighestSalary")
+    @GetMapping("/withHighestSalary")
     public List<Employee> withHighestSalary(@RequestParam(value = "salary", required = false) Integer salary) {
         return employeeService.withHighestSalary(salary);
     }
@@ -32,7 +32,7 @@ public class EmployeeController {
     /**
      * GET возвращать информацию о сотруднике с переданным position
      */
-    @GetMapping(params = "position")
+    @GetMapping
     public List<EmployeeFullInfo> getBuIdEmployeePosition(@RequestParam("position") String position) {
         try {
             return employeeService.getBuIdEmployeePosition(position);
@@ -78,14 +78,14 @@ public class EmployeeController {
      * POST  принимать на вход файл JSON,
      * Все сотрудники из загружаемого файла должны быть сохранены в базе данных.
      */
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void postJsonFileEmployeeRead(@RequestParam("file") MultipartFile file) {
-        try {
-            employeeService.postJsonFileEmployeeRead(file);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public void postJsonFileEmployeeRead(@RequestParam("file") MultipartFile file) {
+//        try {
+//            employeeService.postJsonFileEmployeeRead(file);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
 
 }
