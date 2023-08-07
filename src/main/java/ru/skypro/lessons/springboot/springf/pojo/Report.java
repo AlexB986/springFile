@@ -4,7 +4,9 @@ package ru.skypro.lessons.springboot.springf.pojo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -16,70 +18,21 @@ import java.time.Instant;
 @Accessors(chain = true)
 @Entity
 @Table(name = "report")
+@Getter
+@Setter
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
 
-    @Column(name = "filePath", columnDefinition = "text")
+    @Lob
+    @Column(name = "data", columnDefinition = "text")
+    private String data;
+
     private String filePath;
-//    @Lob
-//    @Column(name = "data", columnDefinition = "text")
-//    private String data;
 
     @CreationTimestamp(source = SourceType.DB)
     @Column(updatable = false, nullable = false)
     private Instant createOn;
-
-
-    public Integer getReportId() {
-        return reportId;
-    }
-
-    public void setReportId(Integer reportId) {
-        this.reportId = reportId;
-    }
-
-//    public String getData() {
-//        return data;
-//    }
-//
-//    public void setData(String data) {
-//        this.data = data;
-//    }
-
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public Instant getCreateOn() {
-        return createOn;
-    }
-
-    public void setCreateOn(Instant createOn) {
-        this.createOn = createOn;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Report{" +
-                "reportId=" + reportId +
-                ", filePath='" + filePath + '\'' +
-                ", createOn=" + createOn +
-                '}';
-    }
-//        public String toString() {
-//        return "Report{" +
-//                "reportId=" + reportId +
-//                ", data='" + data + '\'' +
-//                ", createOn=" + createOn +
-//                '}';
-//    }
 }
 

@@ -14,13 +14,12 @@ public interface ReportService {
     /**
      * POST формировать  статистикой по отделам:
      */
-//    int generateReport() ;
+    int generateReport() ;
 
     /**
      *GET
      *  находить и возвращать созданный ранее файл в формате JSON по идентификатору.
      */
     Optional<Report> generateReportId(Integer id);
-    /////////////////////////////var2//////////////////////////////////////////
     public int saveJsonPath() ;
 }

@@ -11,14 +11,17 @@ import ru.skypro.lessons.springboot.springf.service.EmployeeService;
 
 import java.io.IOException;
 import java.util.List;
+import ru.skypro.lessons.springboot.springf.service.ReportService;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
+    private final ReportService reportService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, ReportService reportService) {
         this.employeeService = employeeService;
+        this.reportService = reportService;
     }
 
     /**
@@ -78,14 +81,14 @@ public class EmployeeController {
      * POST  принимать на вход файл JSON,
      * Все сотрудники из загружаемого файла должны быть сохранены в базе данных.
      */
-//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public void postJsonFileEmployeeRead(@RequestParam("file") MultipartFile file) {
-//        try {
-//            employeeService.postJsonFileEmployeeRead(file);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void postJsonFileEmployeeRead(@RequestParam("file") MultipartFile file) {
+        try {
+            reportService.postJsonFileEmployeeRead(file);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 }

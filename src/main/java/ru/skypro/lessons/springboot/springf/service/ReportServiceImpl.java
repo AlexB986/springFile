@@ -4,12 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
 import ru.skypro.lessons.springboot.springf.dto.ReportDTO;
 import ru.skypro.lessons.springboot.springf.mapper.EmployeeMaper;
+import ru.skypro.lessons.springboot.springf.pojo.Employee;
 import ru.skypro.lessons.springboot.springf.pojo.Report;
 import ru.skypro.lessons.springboot.springf.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.springf.repository.ReportRepository;
@@ -38,19 +43,18 @@ public class ReportServiceImpl implements ReportService{
 
     @Override
     public void postJsonFileEmployeeRead(MultipartFile file) {
-        writeToFile(file);
-        String filePath = "test.json";
+//        writeToFile(file);
+//        String filePath = "test.json";
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
 
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(Paths.get(filePath).toFile(), new TypeReference<>() {
-            });
-            System.out.println(listEmployeeDto);
-            listEmployeeDto.stream()
-                    .map(employeeMaper::toEntity)
-                    .forEach(employeeRepository::save);
+            List<EmployeeDTO> listEmployeeDto = objectMapper.readValue(file.getInputStream(),
+                new TypeReference<>() {});
+            List<Employee> employees = listEmployeeDto.stream()
+                .map(employeeMaper::toEntity).toList();
+            employeeRepository.saveAllAndFlush(employees);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -65,19 +69,18 @@ public class ReportServiceImpl implements ReportService{
     @Override
     public int saveJsonPath() {
         List<ReportDTO> report = reportRepository.buildReport();
-        String filePath = "testStatistic.json";
 
+        Path path = Paths.get("./data/" + UUID.randomUUID() + ".json");
         try {
-            String statistic = objectMapper.writeValueAsString(report);
-            System.out.println(statistic);
-            saveStatisticJsonFile(statistic,filePath);
+            Files.createDirectories(path.getParent());
+            objectMapper.writeValue(path.toFile(), report);
+            Report reportEntity = new Report();
+            reportEntity.setFilePath(path.toAbsolutePath().toString());
 
-            Report reportPath = new Report();
+            reportRepository.save(reportEntity);
 
-            reportPath.setFilePath(String.valueOf(Paths.get(filePath)));
-
-            return reportRepository.save(reportPath).getReportId();
-        } catch (JsonProcessingException e) {
+            return reportEntity.getReportId();
+        } catch (IOException e) {
             throw new IllegalStateException("Error", e);
         }
     }
@@ -89,8 +92,7 @@ public class ReportServiceImpl implements ReportService{
      */
     @Override
     public Optional<Report> generateReportId(Integer id) {
-        Optional<Report> reportsfindById = reportRepository.findById(id);
-        return reportsfindById;
+        return reportRepository.findById(id);
     }
 
 
@@ -98,19 +100,19 @@ public class ReportServiceImpl implements ReportService{
     /**
      * POST формировать  статистикой по отделам:
      */
-//    public int generateReport() {
-//        List<ReportDTO> report = reportRepository.buildReport();
-//        try {
-//            String statistic = objectMapper.writeValueAsString(report);
-//
-//            Report reportEntity = new Report();
-//            reportEntity.setData(statistic);
-//            return reportRepository.save(reportEntity).getReportId();
-//        } catch (JsonProcessingException e) {
-//            throw new IllegalStateException("Error", e);
-//        }
-//
-//    }
+    public int generateReport() {
+        List<ReportDTO> report = reportRepository.buildReport();
+        try {
+            String statistic = objectMapper.writeValueAsString(report);
+
+            Report reportEntity = new Report();
+            reportEntity.setData(statistic);
+            return reportRepository.save(reportEntity).getReportId();
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Error", e);
+        }
+
+    }
 
 
     /**

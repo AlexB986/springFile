@@ -1,6 +1,7 @@
 package ru.skypro.lessons.springboot.springf.repository;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ import ru.skypro.lessons.springboot.springf.pojo.Employee;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     /**
      * GET самой высокой зарплатой
      */
@@ -24,9 +25,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
      * GET возвращать полную информацию о сотруднике
      */
 
-    @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
-            "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
-            "FROM Employee e join fetch Position p " )
+    @Query(value = "SELECT new ru.skypro.lessons.springboot.springf.dto. " +
+            "EmployeeFullInfo(e.employeeId, e.name , e.salary , p.role) " +
+            "FROM Employee e join e.position p")
     List<EmployeeFullInfo> getFullEmployee();
 
     /**
@@ -34,8 +35,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
      */
 
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
-            "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
-            "FROM Employee e JOIN FETCH Position p " +
+            "EmployeeFullInfo(e.employeeId,e.name , e.salary , p.role) " +
+            "FROM Employee e JOIN e.position p " +
             "WHERE p.role = :role")
     List<EmployeeFullInfo> buPositionToEmployee(String role);
 
@@ -43,9 +44,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
      * GET возвращать информацию о сотруднике с переданным id
      */
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto." +
-            "EmployeeFullInfo(e.id,e.name , e.salary , p.role) " +
-            "FROM Employee e  JOIN FETCH e.position p " +
-            "WHERE e.id = :id")
+            "EmployeeFullInfo(e.employeeId,e.name , e.salary , p.role) " +
+            "FROM Employee e  JOIN e.position p " +
+            "WHERE e.employeeId = :id")
     List<EmployeeFullInfo> buIdEmployeeINfo(int id);
 
 }

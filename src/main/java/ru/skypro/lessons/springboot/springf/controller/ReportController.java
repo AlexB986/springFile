@@ -1,76 +1,76 @@
 package ru.skypro.lessons.springboot.springf.controller;
 
-import jakarta.annotation.Resource;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.webjars.NotFoundException;
 import ru.skypro.lessons.springboot.springf.pojo.Report;
-import ru.skypro.lessons.springboot.springf.service.EmployeeService;
 import ru.skypro.lessons.springboot.springf.service.ReportService;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/report")
 public class ReportController {
-    private final ReportService reportService;
+
+  private final ReportService reportService;
 
 
-    public ReportController(ReportService reportService) {
-        this.reportService = reportService;
-    }
+  public ReportController(ReportService reportService) {
+    this.reportService = reportService;
+  }
 
 
-    /**
-     * POST формировать JSON-файл со статистикой по отделам:
-     */
-    @PostMapping
-//    public int report() {
-//        return employeeService.generateReport();
-//    }
-    public int report() {
-        return reportService.saveJsonPath();
-    }
+  /**
+   * POST формировать JSON-файл со статистикой по отделам:
+   */
+//  @PostMapping
+//  public int report() {
+//    return reportService.generateReport();
+//  }
+  @PostMapping
+  public int reportFile() {
+    return reportService.saveJsonPath();
+  }
 
-    /**
-     * GET находить и возвращать созданный ранее файл в формате JSON по идентификатору.
-     */
+  /**
+   * GET находить и возвращать созданный ранее файл в формате JSON по идентификатору.
+   */
 
-//    @GetMapping(value = "/{id}")
-//    public ResponseEntity<?> dowloadReportId(@RequestParam Integer id) {
-//        String filePath = "test.json";
-//        ByteArrayResource resource = new ByteArrayResource(employeeService.generateReportId(id).get().getData().getBytes());
+//  @GetMapping(value = "/{id}")
+//  public ResponseEntity<?> dowloadReportId(@PathVariable Integer id) {
+//    String fileName = "test.json";
+//    Resource resource = new ByteArrayResource(
+//        reportService.generateReportId(id)
+//            .map(Report::getData)
+//            .map(String::getBytes)
+//            .orElseThrow(() -> new NotFoundException("Report not found"))
+//    );
 //
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filePath + "\"")
-//                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-//                .body(resource);
-//    }
-    ///////////////////////var2/////////////////////////////////////
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> dowloadReportId(@RequestParam Integer id) {
-        String filePath = "testStatistics.json";
-        Optional<Report> reportsfindById = reportService.generateReportId(id);
-        try {
-            File resource = new ClassPathResource(reportsfindById.get().getFilePath()).getFile();
-//        ByteArrayResource resource = new ByteArrayResource(employeeService.generateReportId(id).get().getFilePath().getBytes());
+//    return ResponseEntity.ok()
+//        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+//        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+//        .body(resource);
+//  }
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<?> dowloadReportId(@PathVariable Integer id) {
+    String fileName = "test.json";
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filePath + "\"")
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .body(resource);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    Resource resource = new FileSystemResource(
+        reportService.generateReportId(id)
+            .map(Report::getFilePath)
+            .orElseThrow(() -> new NotFoundException("Report not found"))
+    );
 
-        }
-        return null;
-    }
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .body(resource);
+  }
 }
 

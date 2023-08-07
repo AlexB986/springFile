@@ -18,7 +18,7 @@ public interface ReportRepository extends CrudRepository<Report, Integer> {
      */
 
     @Query("SELECT new ru.skypro.lessons.springboot.springf.dto. " +
-            "ReportDTO(e.position.role ,count (e.employeeId),max(e.salary),min(e.salary),avg (e.salary))FROM Employee  e GROUP BY e .position")
+            "ReportDTO(e.position.role ,count(e.employeeId),max(e.salary),min(e.salary),avg (e.salary)) FROM Employee  e GROUP BY e .position")
     List<ReportDTO> buildReport();
 
 
