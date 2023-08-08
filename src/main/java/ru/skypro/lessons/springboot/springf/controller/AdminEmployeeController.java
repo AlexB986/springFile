@@ -14,12 +14,12 @@ import java.util.List;
 import ru.skypro.lessons.springboot.springf.service.ReportService;
 
 @RestController
-@RequestMapping("/employees")
-public class EmployeeController {
+@RequestMapping("admin/employees")
+public class AdminEmployeeController {
     private final EmployeeService employeeService;
     private final ReportService reportService;
 
-    public EmployeeController(EmployeeService employeeService, ReportService reportService) {
+    public AdminEmployeeController(EmployeeService employeeService, ReportService reportService) {
         this.employeeService = employeeService;
         this.reportService = reportService;
     }
