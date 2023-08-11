@@ -24,6 +24,7 @@ public class   AuthUser {
     private String username;
 
     private String password;
+
     private Integer enabled ;
     @JoinColumn(name = "user_id")
     @OneToMany(fetch = FetchType.EAGER)
