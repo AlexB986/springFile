@@ -1,0 +1,37 @@
+[
+  {
+    "name": "zita",
+    "salary": 123456,
+    "positionId": 1
+  },
+  {
+    "name": "gena",
+    "salary": 123400,
+    "positionId": 1
+  },
+  {
+    "name": "tom",
+    "salary": 13456,
+    "positionId": 3
+  },
+  {
+    "name": "jerry",
+    "salary": 56790,
+    "positionId": 2
+  },
+  {
+    "name": "tomas",
+    "salary": 18900,
+    "positionId": 2
+  },
+  {
+    "name": "goga",
+    "salary": 13200,
+    "positionId": 2
+  },
+  {
+    "name": "zita",
+    "salary": 123890,
+    "positionId": 2
+  }
+]
