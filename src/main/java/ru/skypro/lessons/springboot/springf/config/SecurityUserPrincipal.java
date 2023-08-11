@@ -3,7 +3,6 @@ package ru.skypro.lessons.springboot.springf.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.skypro.lessons.springboot.springf.dto.AuthUser;
 
 import java.util.Collection;
 

@@ -1,5 +1,6 @@
 package ru.skypro.lessons.springboot.springf.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,36 +20,39 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public UserDetailsService userDetailsService;
 
     @Bean
-
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        // Устанавливаем наш созданный экземпляр PasswordEncoder
-        // для возможности использовать его при аутентификации.
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
     @Bean
-    public UserDetailsManager UserDetailManager(DataSource dataSource, AuthenticationManager authenticationManager) {
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+    public UserDetailsManager userDetailsManager(DataSource dataSource,
+                                                 AuthenticationManager authenticationManager) {
+
+
+        JdbcUserDetailsManager jdbcUserDetailsManager =
+                new JdbcUserDetailsManager(dataSource);
+
         jdbcUserDetailsManager.setAuthenticationManager(authenticationManager);
         return jdbcUserDetailsManager;
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
@@ -61,10 +65,11 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests(this::customizeRequest);
+
         return http.build();
     }
 
-    public void customizeRequest(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
+    private void customizeRequest(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
         try {
             registry.requestMatchers(new AntPathRequestMatcher("/admin/**"))
                     .hasAnyRole("ADMIN")  // Только для пользователей с ролью ADMIN.
@@ -80,7 +85,6 @@ public class SecurityConfig {
             throw new RuntimeException(e);
         }
     }
-
 }
 //       1  Создайте таблицы пользователей с хешированными паролями.
 
