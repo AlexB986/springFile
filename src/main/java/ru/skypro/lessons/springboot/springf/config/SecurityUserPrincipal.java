@@ -4,12 +4,15 @@ package ru.skypro.lessons.springboot.springf.config;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class SecurityUserPrincipal implements UserDetails {
     private AuthUser user;
-
-    public SecurityUserPrincipal(AuthUser user){
+    private Authorities authorities;
+    public SecurityUserPrincipal(AuthUser user) {
         this.user = user;
     }
 

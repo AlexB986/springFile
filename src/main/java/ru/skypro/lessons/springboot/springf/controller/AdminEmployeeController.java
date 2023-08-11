@@ -14,7 +14,7 @@ import java.util.List;
 import ru.skypro.lessons.springboot.springf.service.ReportService;
 
 @RestController
-@RequestMapping("admin/employees")
+@RequestMapping("/admin")
 public class AdminEmployeeController {
     private final EmployeeService employeeService;
     private final ReportService reportService;

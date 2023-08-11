@@ -1,22 +1,24 @@
 package ru.skypro.lessons.springboot.springf.config;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+
 @Setter
 @Getter
 @Entity
 @Table(name = "auth_user")
 public class   AuthUser {
-
-    @Id
+//public class   AuthUser implements GrantedAuthority {
+     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -27,8 +29,11 @@ public class   AuthUser {
 
     private Integer enabled ;
     @JoinColumn(name = "user_id")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany( fetch = FetchType.EAGER)
     private List<Authorities>authoritiesList;
 
+
+
 }
+
 

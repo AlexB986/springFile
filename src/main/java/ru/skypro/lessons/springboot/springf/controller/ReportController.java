@@ -15,7 +15,7 @@ import ru.skypro.lessons.springboot.springf.pojo.Report;
 import ru.skypro.lessons.springboot.springf.service.ReportService;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/")
 public class ReportController {
 
   private final ReportService reportService;
