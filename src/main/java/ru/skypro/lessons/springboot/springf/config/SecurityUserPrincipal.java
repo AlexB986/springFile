@@ -1,24 +1,25 @@
 package ru.skypro.lessons.springboot.springf.config;
 
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class SecurityUserPrincipal implements UserDetails {
     private AuthUser user;
-    private Authorities authorities;
+
+    private Authorities role;
+
     public SecurityUserPrincipal(AuthUser user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+            return user.getAuthoritiesList();
     }
 
     @Override

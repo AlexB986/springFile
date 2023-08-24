@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Table(name = "auth_user")
 public class   AuthUser {
-//public class   AuthUser implements GrantedAuthority {
      @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,8 +31,6 @@ public class   AuthUser {
     @OneToMany( fetch = FetchType.EAGER)
     private List<Authorities>authoritiesList;
 
-
-
-}
+    }
 
 

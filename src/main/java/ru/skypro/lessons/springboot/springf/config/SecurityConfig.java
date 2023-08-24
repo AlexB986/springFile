@@ -33,7 +33,6 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
     private AuthUser user;
-    private SecurityUserPrincipal userPrincipal;
 
 
     @Bean
@@ -50,21 +49,7 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource, AuthenticationManager authenticationManager) {
 
-
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-
-        jdbcUserDetailsManager.setAuthenticationManager(authenticationManager);
-        return jdbcUserDetailsManager;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 
 
     @Bean
@@ -78,10 +63,15 @@ public class SecurityConfig {
 
     private void customizeRequest(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
         try {
-            registry.requestMatchers(HttpMethod.GET, "/employee/**").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/employee/**").hasAnyRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/employee/**").hasAnyRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/employee/**").hasAnyRole("ADMIN")
+//            registry.requestMatchers(HttpMethod.GET, "/employee/**").hasAnyRole("USER", "ADMIN")
+//                    .requestMatchers(HttpMethod.POST, "/employee/**").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.PUT, "/employee/**").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.DELETE, "/employee/**").hasRole("ADMIN")
+
+            registry.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/admin/**").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/admin/**").hasAnyRole("ADMIN")
 
                     .and()
                     .formLogin().permitAll()
