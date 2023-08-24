@@ -1,0 +1,23 @@
+[
+  {
+    "position": "1",
+    "count": 2,
+    "maxSalary": 123456,
+    "minSalary": 123400,
+    "averageSalary": 123428.0
+  },
+  {
+    "position": "2",
+    "count": 4,
+    "maxSalary": 123890,
+    "minSalary": 13200,
+    "averageSalary": 53195.0
+  },
+  {
+    "position": "3",
+    "count": 1,
+    "maxSalary": 13456,
+    "minSalary": 13456,
+    "averageSalary": 13456.0
+  }
+]
