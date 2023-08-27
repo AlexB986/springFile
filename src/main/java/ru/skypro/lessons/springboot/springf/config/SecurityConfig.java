@@ -63,10 +63,7 @@ public class SecurityConfig {
 
     private void customizeRequest(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
         try {
-//            registry.requestMatchers(HttpMethod.GET, "/employee/**").hasAnyRole("USER", "ADMIN")
-//                    .requestMatchers(HttpMethod.POST, "/employee/**").hasRole("ADMIN")
-//                    .requestMatchers(HttpMethod.PUT, "/employee/**").hasRole("ADMIN")
-//                    .requestMatchers(HttpMethod.DELETE, "/employee/**").hasRole("ADMIN")
+
 
             registry.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyRole("USER", "ADMIN")
                     .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyRole("ADMIN")
