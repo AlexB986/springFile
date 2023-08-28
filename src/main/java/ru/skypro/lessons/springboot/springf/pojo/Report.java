@@ -34,5 +34,15 @@ public class Report {
     @CreationTimestamp(source = SourceType.DB)
     @Column(updatable = false, nullable = false)
     private Instant createOn;
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "reportId=" + reportId +
+                ", data='" + data + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", createOn=" + createOn +
+                '}';
+    }
 }
 

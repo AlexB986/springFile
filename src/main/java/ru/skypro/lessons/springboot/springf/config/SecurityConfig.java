@@ -50,8 +50,6 @@ public class SecurityConfig {
     }
 
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
@@ -69,6 +67,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/admin/**").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/admin/**").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/app/**").hasAnyRole("USER", "ADMIN")
 
                     .and()
                     .formLogin().permitAll()

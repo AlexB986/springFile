@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.lessons.springboot.springf.dto.EmployeeDTO;
@@ -26,14 +28,21 @@ import java.util.Optional;
 
 import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.saveStatisticJsonFile;
 import static ru.skypro.lessons.springboot.springf.writeReadToFile.WriteReadToFile.writeToFile;
-@AllArgsConstructor
 @Service
 public class ReportServiceImpl implements ReportService{
     private final EmployeeMaper employeeMaper;
     private final ObjectMapper objectMapper;
     private final ReportRepository reportRepository;
     private final EmployeeRepository employeeRepository;
+    Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
+
+    public ReportServiceImpl(EmployeeMaper employeeMaper, ObjectMapper objectMapper, ReportRepository reportRepository, EmployeeRepository employeeRepository) {
+        this.employeeMaper = employeeMaper;
+        this.objectMapper = objectMapper;
+        this.reportRepository = reportRepository;
+        this.employeeRepository = employeeRepository;
+    }
 
     /**
      * POST  принимать на вход файл JSON,
@@ -43,9 +52,8 @@ public class ReportServiceImpl implements ReportService{
 
     @Override
     public void postJsonFileEmployeeRead(MultipartFile file) {
-//        writeToFile(file);
-//        String filePath = "test.json";
         ObjectMapper objectMapper = new ObjectMapper();
+        logger.error("исключение загрузки файла "+ file);
 
         try {
 
@@ -56,6 +64,7 @@ public class ReportServiceImpl implements ReportService{
                 .map(employeeMaper::toEntity).toList();
             employeeRepository.saveAllAndFlush(employees);
         } catch (IOException ex) {
+            logger.error("Исключение  загрузки файла  = " + file, ex);
             ex.printStackTrace();
         }
     }
