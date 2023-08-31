@@ -1,5 +1,7 @@
 package ru.skypro.lessons.springboot.springf.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import java.util.List;
 import ru.skypro.lessons.springboot.springf.service.ReportService;
 
 @RestController
-@RequestMapping("admin/employees")
+@RequestMapping("/admin")
 public class AdminEmployeeController {
     private final EmployeeService employeeService;
     private final ReportService reportService;

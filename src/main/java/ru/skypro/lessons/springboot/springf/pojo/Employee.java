@@ -30,4 +30,15 @@ public class Employee {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id",insertable = false, updatable = false)
     private Position position;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", positionId=" + positionId +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", position=" + position +
+                '}';
+    }
 }

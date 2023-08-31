@@ -3,6 +3,9 @@ package ru.skypro.lessons.springboot.springf.service;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +15,17 @@ import ru.skypro.lessons.springboot.springf.pojo.Employee;
 import ru.skypro.lessons.springboot.springf.repository.EmployeeRepository;
 
 //@NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 //@RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    Logger logger = LoggerFactory .getLogger(EmployeeServiceImpl.class);
 
-
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     /**
      * GET возвращать информацию о сотруднике с переданным id
@@ -27,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeFullInfo> getBuIdEmployee(int id) {
+        logger.info("Вызов  работника номер "+id);
         return employeeRepository.buIdEmployeeINfo(id);
     }
 
@@ -35,6 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public List<Employee> withHighestSalary(Integer lowBoard) {
+        logger.info("Вызов работников с зарплатой больше" + lowBoard);
         return employeeRepository.employeeUserHighSalary(lowBoard);
     }
 
@@ -53,6 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeFullInfo> getFull() {
 
+        logger.info("Вызов всех работников");
         return employeeRepository.getFullEmployee();
     }
 
