@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: developer
+      changes:
+        - createTable:
+            tableName: room
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: number
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: capacity
+                  type: int
+                  constraints:
+                    nullable: false
