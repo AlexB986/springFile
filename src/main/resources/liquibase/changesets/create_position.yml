@@ -3,7 +3,7 @@ databaseChangeLog:
       id: 2
       author: devel
       changes:
-        - createsTable:
+        - createTable:
             tableName: position
             columns:
               - column:
@@ -17,8 +17,9 @@ databaseChangeLog:
                   type: varchar
                   constraints:
                     nullable: false
-              - column:
-                  name: employeeList
-                  type: List<Employee>
+
+#              - column:
+#                  name: employeeList
+#                  type: List<Employee>
 
 

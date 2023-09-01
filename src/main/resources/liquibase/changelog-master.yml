@@ -5,9 +5,9 @@ databaseChangeLog:
   - include:
       file:
         liquibase/changesets/create_position.yml
-#  - include:
-#      file:
-#        liquibase/changesets/create_auth_user.yml
-#  - include:
-#      file:
-#        liquibase/changesets/create_authorities.yml
+  - include:
+      file:
+        liquibase/changesets/create_auth_user.yml
+  - include:
+      file:
+        liquibase/changesets/create_authorities.yml
