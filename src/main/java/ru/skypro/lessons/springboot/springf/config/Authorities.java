@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-//@Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "role")
